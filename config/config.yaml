@@ -1,0 +1,5 @@
+Server:
+  AppVersion: "1.0.0"
+  Host: "0.0.0.0"
+  Port: "8080"
+  Timeout: 60s
