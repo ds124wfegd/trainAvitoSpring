@@ -1,0 +1,2 @@
+# trainAvitoSpring
+internship test assignment
