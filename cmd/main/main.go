@@ -1,7 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/ds124wfegd/trainAvitoSpring/config"
 	"github.com/ds124wfegd/trainAvitoSpring/internal/httpServer"
@@ -33,4 +38,18 @@ func main() {
 		Logger.Error("",
 			zap.Error(err))
 	}
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+	Logger.Info("app Shutting Down")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		Logger.Error("Error occured on server shutting down",
+			zap.Error(err))
+	}
+
 }

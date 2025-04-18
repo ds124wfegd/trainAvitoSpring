@@ -1,6 +1,7 @@
 package httpServer
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -30,4 +31,8 @@ func (s *Server) Run() error {
 		log.Fatalf("Cannot listen Error: {%s}", err)
 	}
 	return nil
+}
+
+func (s *Server) Shutdown(ctx context.Context) error {
+	return s.fiber.ShutdownWithContext(ctx)
 }
