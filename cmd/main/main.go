@@ -3,33 +3,34 @@ package main
 import (
 	"log"
 
-	"github.com/spf13/viper"
+	"github.com/ds124wfegd/trainAvitoSpring/config"
+	"github.com/ds124wfegd/trainAvitoSpring/internal/httpServer"
 	"go.uber.org/zap"
 )
 
 func main() {
-	logger, err := zap.NewProduction
-	if err!= nil {
+	Logger, err := zap.NewProduction()
+	if err != nil {
 		log.Fatalf("Failed to initialize zap logger: %v", err)
 	}
-	defer logger.Sync()
+	defer Logger.Sync()
 
 	viperInstance, err := config.LoadConfig()
 
 	if err != nil {
-		logger.Error("Cannot load config.", 
-		zap.Error(err))
+		Logger.Error("Cannot load config.",
+			zap.Error(err))
 	}
 
 	cfg, err := config.ParseConfig(viperInstance)
-	if err!=nil {
-		logger.Error("Cannot parse config", 
-		zap.Error(err))
+	if err != nil {
+		Logger.Error("Cannot parse config",
+			zap.Error(err))
 	}
 
-	server:=httpServer.NewServer(cfg)
-	if err = server.Run() != nil {
-		logger.Error("Cannot parse config", 
-		zap.Error(err))
+	server := httpServer.NewServer(cfg)
+	if err = server.Run(); err != nil {
+		Logger.Error("",
+			zap.Error(err))
 	}
 }

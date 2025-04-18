@@ -1,5 +1,15 @@
 Server:
   AppVersion: "1.0.0"
-  Host: "0.0.0.0"
+  Host: "localhost"
   Port: "8080"
   Timeout: 60s
+
+
+  Postgres:
+  host: "postgres"
+  port: "5432"
+  user: "root"
+  password: "root"
+  DBName: "taskdb"
+  sslMode: "disable"
+  pgDriver: "pgx"
